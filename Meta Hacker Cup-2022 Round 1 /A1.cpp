@@ -15,7 +15,7 @@ vector<int> compute_failure(const vector<int>& pattern) {
     return fail;
 }
 
-// Returns first position in text where pattern matches, or -1
+
 int kmpSearch(const vector<int>& text, const vector<int>& pattern) {
     int n = text.size(), m = pattern.size();
     if (m == 0) return 0;
@@ -32,7 +32,7 @@ int kmpSearch(const vector<int>& text, const vector<int>& pattern) {
     return -1;
 }
 
-void solve(int caseNum) {
+void solve(int num) {
     int N, K;
     cin >> N >> K;
 
@@ -40,7 +40,7 @@ void solve(int caseNum) {
     for (int i = 0; i < N; i++) cin >> A[i];
     for (int i = 0; i < N; i++) cin >> B[i];
 
-    // Build text = A + A (length 2N), search for B
+   
     vector<int> text;
     text.reserve(2 * N);
     text.insert(text.end(), A.begin(), A.end());
@@ -50,21 +50,21 @@ void solve(int caseNum) {
 
     string ans;
     if (pos == -1) {
-        // B is not a rotation of A
+       
         ans = "NO";
     } else {
-        int d = pos; // rotation offset needed
+        int d = pos; 
         if (K == 0) {
             ans = (d == 0) ? "YES" : "NO";
         } else if (K == 1) {
             ans = (d != 0) ? "YES" : "NO";
         } else {
-            // K >= 2: always possible if B is a rotation of A
+            
             ans = "YES";
         }
     }
 
-    cout << "Case #" << caseNum << ": " << ans << "\n";
+    cout << "Case #" << num << ": " << ans << "\n";
 }
 //written by Manisha0369
 //code for A1
