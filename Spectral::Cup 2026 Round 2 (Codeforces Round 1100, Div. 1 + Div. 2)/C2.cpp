@@ -1,56 +1,66 @@
 #include <bits/stdc++.h>
 using namespace std;
-
+using ll =long long ;
 const long long NEG_INF = -1e18;
 
-void solve() {
+
+   
+void solve(){
     int n;
     cin >> n;
-    vector<long long> a(n + 1);
-    for (int i = 1; i <= n; i++) cin >> a[i];
+
+    vector<int> a(n);
+    for (int &x : a) cin >> x;
+
+    vector<ll> pre(n), suf(n + 1);
+    pre[0] = abs(a[0]);
+    for (int i = 1; i < n; i++)
+        pre[i] = pre[i - 1] + abs(a[i]);
     
-    vector<array<long long, 2>> dp(n + 1);
-    vector<array<int, 2>> choice(n + 1);
-    dp[0] = {0LL, 0LL};
-    
-    for (int j = 1; j <= n; j++) {
-        for (int p = 0; p < 2; p++) {
-            long long contrib = (p == 0 ? a[j] : -a[j]);
-            long long val0 = contrib + dp[j-1][p];
-            long long val1 = NEG_INF;
-            if (a[j] > 0) val1 = -contrib + dp[j-1][1-p];
-            
-            if (val0 >= val1) {
-                dp[j][p] = val0;
-                choice[j][p] = 0;
-            } else {
-                dp[j][p] = val1;
-                choice[j][p] = 1;
+    suf[n - 1] = a[n - 1];
+    for (int i = n - 2; i >= 0; i--)
+        suf[i] = suf[i + 1] + a[i];
+
+    ll best = suf[0];
+    int idx = -1;
+    for (int i = 1; i < n; i++){
+        if (a[i] > 0){
+            ll point = pre[i - 1] + suf[i + 1] - a[i];
+            if (point > best){
+                best = point;
+                idx = i;
             }
         }
     }
-    
-    vector<int> ops;
-    int p = 0;
-    for (int j = n; j >= 1; j--) {
-        if (choice[j][p] == 1) {
-            ops.push_back(j);
-            p = 1 - p;
-        }
-    }
-    reverse(ops.begin(), ops.end());
-    
-    cout << ops.size() << "\n";
-    for (int i = 0; i < (int)ops.size(); i++) {
-        cout << ops[i];
-        if (i + 1 < (int)ops.size()) cout << " ";
-    }
-    if (!ops.empty()) cout << "\n";
-}
 
-int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    int t; cin >> t;
+    if (idx == -1){
+        cout << "0\n";
+        return;
+    }
+
+    vector<int> want ;
+    for (int i = idx - 1; i >= 0; i--){
+        if (want.size() & 1)
+            a[i] = -a[i];
+        if (a[i] > 0)
+            want.push_back(i);
+    }
+    want.push_back(idx);
+
+    cout << want.size() << "\n";
+    for (int i = 0; i < want.size(); i++)
+        cout << want[i] + 1 << " \n"[i == want.size() - 1];
+}
+//written by Manisha0369
+//code for C2
+/// @return 
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    
+    int t;
+    cin >> t;
     while (t--) solve();
 }
+
+
