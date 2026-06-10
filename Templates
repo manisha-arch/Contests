@@ -1,0 +1,5 @@
+#ifndef ONLINE_JUDGE
+    // Automatically routes files locally without modifying code for submission
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+#endif
