@@ -28,38 +28,9 @@ void solve (){
     
     
    
-         int n, k;
-    cin >> n >> k;
-    
-    string s, z;
-    cin >> s >> z;
-    
-    ll t = (1LL << k) + 1;
-    ll res = 0;
-    
+       
+      
    
-    for (int bit = 0; bit < n; bit++) {
-        int b1 = s[bit] - '0';
-        int b2 = z[bit] - '0';
-        
-        ll on;
-        if (b1 == b2) {
-      
-            on = b1 ? t : 0;
-        } else {
-            
-            on = 1LL << (k - 1);
-            if (b1 == 1) on++;
-            if (b2 == 1) on++;
-        }
-        
-        ll zeros = t - on;
-        res += on * zeros;
-    }
-    
-    cout << res << "\n";
-      
-    }
     
    
 
